@@ -1,0 +1,21 @@
+.team-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.team-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #f6f6f6;
+  width: 100px;
+  height: 200px;
+  margin: 5px;
+}
+
+.team-logo {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
