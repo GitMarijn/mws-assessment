@@ -1,0 +1,17 @@
+h1 {
+  color: black;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f6f6f6;
+}
+
+.past-games-card {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0 20px 0;
+  align-items: center;
+}

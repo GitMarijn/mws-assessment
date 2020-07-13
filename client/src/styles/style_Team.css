@@ -1,5 +1,34 @@
-.team-header {
+h4 {
   text-align: center;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  list-style-type: none;
+  padding: 0;
+}
+
+.team-header {
+  display: flex;
+  justify-content: center;
+  color: black;
+  background-color: #f6f6f6;
+}
+
+.games-container {
+  display: flex;
+}
+
+.future-games-card {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.no-games-msg {
   display: flex;
   justify-content: center;
 }

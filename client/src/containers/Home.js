@@ -21,8 +21,8 @@ class Home extends Component {
       .get("https://api.collegefootballdata.com/teams")
       .then((result) =>
         this.setState({
-          teams: result.data,
           isLoading: false,
+          teams: result.data,
         })
       )
       .catch((error) =>
@@ -39,7 +39,6 @@ class Home extends Component {
     if (error) {
       return <p>{error.message}</p>;
     }
-
     if (isLoading) {
       return <p>Loading ...</p>;
     }
