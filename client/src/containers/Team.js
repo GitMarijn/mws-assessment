@@ -92,7 +92,7 @@ class Team extends Component {
             {this.createList()}
           </div>
           <div className="col-sm-6 future-container">
-            <h4>Future games</h4>
+            <h4>Upcoming games</h4>
             <div>
               {games.length == 0 ? (
                 <span className="no-games-msg">

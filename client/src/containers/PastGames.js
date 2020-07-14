@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Collapsible from "react-collapsible";
 import "../styles/style_PastGames.css";
 
 class PastGames extends Component {
@@ -39,6 +40,10 @@ class PastGames extends Component {
       );
   }
 
+  handleCollaps = () => {
+    document.getElementById(".collapsible").collapse("toggle");
+  };
+
   render() {
     const { games, isLoading, error } = this.state;
 
@@ -58,21 +63,30 @@ class PastGames extends Component {
           <h3>{this.state.year}</h3>
         </div>
 
-        <div>
+        <div className="past-games-container">
           {games.length == 0 ? (
             <span className="no-games-msg">
               This team did not play any games this year.
             </span>
           ) : (
             games.map((game, index) => (
-              <div key={index} className="past-games-card">
+              <div key={index} className="col-sm-3 past-games-card">
                 <span>{new Date(game.start_date).toDateString()}</span>
                 <h6>
                   {game.home_team} - {game.away_team}
                 </h6>
-                <h4 className="game-score">
+                <h4>
                   {game.home_points} - {game.away_points}
                 </h4>
+
+                <Collapsible trigger="Game Details" triggerWhenOpen="Close">
+                  <div className="card card-body">
+                    <span className="detail-title">Venue:</span>
+                    <span>{game.venue}</span>
+                    <span className="detail-title">Attendance:</span>
+                    <span>{game.attendance.toLocaleString()}</span>
+                  </div>
+                </Collapsible>
               </div>
             ))
           )}

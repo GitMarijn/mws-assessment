@@ -9,6 +9,8 @@ class Home extends Component {
     super(props);
     this.state = {
       teams: [],
+      filteredTeams: [],
+      searchValue: "",
       isLoading: false,
       error: null,
     };
@@ -33,8 +35,21 @@ class Home extends Component {
       );
   }
 
+  handleChange = (event) => {
+    const search = event.target.value.toLowerCase();
+
+    this.setState({
+      searchValue: search,
+      filteredTeams: this.state.teams.filter(
+        (team) =>
+          (team.school && team.school.toLowerCase().includes(search)) ||
+          (team.mascot && team.mascot.toLowerCase().includes(search))
+      ),
+    });
+  };
+
   render() {
-    const { teams, isLoading, error } = this.state;
+    const { filteredTeams, teams, isLoading, error } = this.state;
 
     if (error) {
       return <p>{error.message}</p>;
@@ -44,30 +59,71 @@ class Home extends Component {
     }
 
     return (
-      <div className="col-sm-12 team-container">
-        {teams.map((team, index) => (
-          <Link
-            key={index}
-            className="col-sm-2 team-card"
-            to={{
-              pathname: "/games/" + encodeURIComponent(team.school),
-              team: team.school,
-            }}
-          >
-            <span>{team.school}</span>
-            <span>{team.mascot}</span>
+      <React.Fragment>
+        <div className="input-group input-group-lg col-sm-12">
+          <div className="input-group-prepend">
+            <span className="input-group-text">
+              <span className="fas fa-search"></span>
+            </span>
+          </div>
+          <input
+            type="search"
+            className="form-control"
+            placeholder="Search teams..."
+            value={this.state.searchValue}
+            onChange={this.handleChange}
+          />
+        </div>
 
-            {/* <img
-              className="team-logo"
-              src={team.logos === null ? defaultLogo : team.logos[1]}
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = defaultLogo;
-              }}
-            /> */}
-          </Link>
-        ))}
-      </div>
+        <div className="col-sm-12 team-container">
+          {!this.state.searchValue
+            ? teams.map((team, index) => (
+                <Link
+                  key={index}
+                  className="col-sm-2 team-card"
+                  to={{
+                    pathname: "/games/" + encodeURIComponent(team.school),
+                    team: team.school,
+                  }}
+                >
+                  <span>{team.school}</span>
+                  <span>{team.mascot}</span>
+
+                  <img
+                    className="team-logo"
+                    alt="logo"
+                    src={team.logos === null ? defaultLogo : team.logos[1]}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = defaultLogo;
+                    }}
+                  />
+                </Link>
+              ))
+            : filteredTeams.map((team, index) => (
+                <Link
+                  key={index}
+                  className="col-sm-2 team-card"
+                  to={{
+                    pathname: "/games/" + encodeURIComponent(team.school),
+                    team: team.school,
+                  }}
+                >
+                  <span>{team.school}</span>
+                  <span>{team.mascot}</span>
+
+                  <img
+                    className="team-logo"
+                    src={team.logos === null ? defaultLogo : team.logos[1]}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = defaultLogo;
+                    }}
+                  />
+                </Link>
+              ))}
+        </div>
+      </React.Fragment>
     );
   }
 }

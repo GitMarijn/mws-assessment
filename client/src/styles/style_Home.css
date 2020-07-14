@@ -12,10 +12,16 @@
   width: 100px;
   height: 200px;
   margin: 5px;
+  align-items: center;
 }
 
 .team-logo {
-  max-width: 100%;
+  max-width: 50%;
   height: auto;
-  object-fit: cover;
+  margin: auto;
+}
+
+.input-group {
+  display: flex;
+  margin: 10px 0 10px 0;
 }
