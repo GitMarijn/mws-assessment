@@ -57,6 +57,9 @@ class PastGames extends Component {
     return (
       <React.Fragment>
         <div className="col-sm-12 header">
+          <Link to="/">
+            <h4>Home</h4>
+          </Link>
           <Link to={"/games/" + this.state.teamURL}>
             <h1>{this.props.match.params.team}</h1>
           </Link>
@@ -64,7 +67,7 @@ class PastGames extends Component {
         </div>
 
         <div className="past-games-container">
-          {games.length == 0 ? (
+          {games.length === 0 ? (
             <span className="no-games-msg">
               This team did not play any games this year.
             </span>

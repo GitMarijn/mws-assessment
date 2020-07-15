@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "../styles/style_Home.css";
 import defaultLogo from "../images/default.png";
 
-class Home extends Component {
+class AltHome extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,6 +13,8 @@ class Home extends Component {
       searchValue: "",
       isLoading: false,
       error: null,
+      currentPage: 1,
+      teamsPerPage: 50,
     };
   }
 
@@ -35,6 +37,12 @@ class Home extends Component {
       );
   }
 
+  handlePageClick = (event) => {
+    this.setState({
+      currentPage: Number(event.target.id),
+    });
+  };
+
   handleChange = (event) => {
     const search = event.target.value.toLowerCase();
 
@@ -49,7 +57,35 @@ class Home extends Component {
   };
 
   render() {
-    const { filteredTeams, teams, isLoading, error } = this.state;
+    const {
+      filteredTeams,
+      teams,
+      isLoading,
+      error,
+      searchValue,
+      currentPage,
+      teamsPerPage,
+    } = this.state;
+    const indexOfLastTeam = currentPage * teamsPerPage;
+    const indexOfFirstTeam = indexOfLastTeam - teamsPerPage;
+    const currentTeams = teams.slice(indexOfFirstTeam, indexOfLastTeam);
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(teams.length / teamsPerPage); i++) {
+      pageNumbers.push(i);
+    }
+
+    const renderPageNumbers = pageNumbers.map((number) => {
+      return (
+        <li
+          key={number}
+          id={number}
+          onClick={this.handlePageClick}
+          className={number === currentPage ? "active-link" : ""}
+        >
+          {number}
+        </li>
+      );
+    });
 
     if (error) {
       return <p>{error.message}</p>;
@@ -76,8 +112,9 @@ class Home extends Component {
         </div>
 
         <div className="col-sm-12 team-container">
-          {!this.state.searchValue
-            ? teams.map((team, index) => (
+          {!searchValue ? (
+            <React.Fragment>
+              {currentTeams.map((team, index) => (
                 <Link
                   key={index}
                   className="col-sm-2 team-card"
@@ -99,33 +136,40 @@ class Home extends Component {
                     }}
                   />
                 </Link>
-              ))
-            : filteredTeams.map((team, index) => (
-                <Link
-                  key={index}
-                  className="col-sm-2 team-card"
-                  to={{
-                    pathname: "/games/" + encodeURIComponent(team.school),
-                    team: team.school,
-                  }}
-                >
-                  <span>{team.school}</span>
-                  <span>{team.mascot}</span>
-
-                  <img
-                    className="team-logo"
-                    src={team.logos === null ? defaultLogo : team.logos[1]}
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = defaultLogo;
-                    }}
-                  />
-                </Link>
               ))}
+              <div className="pagination col-sm-10">
+                <ul id="page-numbers">{renderPageNumbers}</ul>
+              </div>
+            </React.Fragment>
+          ) : (
+            filteredTeams.map((team, index) => (
+              <Link
+                key={index}
+                className="col-sm-2 team-card"
+                to={{
+                  pathname: "/games/" + encodeURIComponent(team.school),
+                  team: team.school,
+                }}
+              >
+                <span>{team.school}</span>
+                <span>{team.mascot}</span>
+
+                <img
+                  className="team-logo"
+                  alt="defaultlogo"
+                  src={team.logos === null ? defaultLogo : team.logos[1]}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = defaultLogo;
+                  }}
+                />
+              </Link>
+            ))
+          )}
         </div>
       </React.Fragment>
     );
   }
 }
 
-export default Home;
+export default AltHome;

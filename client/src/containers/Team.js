@@ -67,7 +67,7 @@ class Team extends Component {
         </li>
       )
     );
-    return <ul>{list}</ul>;
+    return <ul className="year-list">{list}</ul>;
   };
 
   render() {
@@ -83,9 +83,11 @@ class Team extends Component {
 
     return (
       <React.Fragment>
-        <Link to="/" className="col-sm-12 team-header">
-          <h1>{this.state.teamName}</h1>
+        <Link to="/">
+          <h4>Home</h4>
         </Link>
+        <h1 className="col-sm-12 team-header">{this.state.teamName}</h1>
+
         <div className="col-sm-12 games-container">
           <div className="col-sm-6 past-container">
             <h4>Past games</h4>
@@ -94,7 +96,7 @@ class Team extends Component {
           <div className="col-sm-6 future-container">
             <h4>Upcoming games</h4>
             <div>
-              {games.length == 0 ? (
+              {games.length === 0 ? (
                 <span className="no-games-msg">
                   This team does not have any future games.
                 </span>
@@ -102,9 +104,9 @@ class Team extends Component {
                 games.map((game, index) => (
                   <div key={index} className="future-games-card">
                     <span>{new Date(game.start_date).toDateString()}</span>
-                    <span>
+                    <h6>
                       {game.home_team} - {game.away_team}
-                    </span>
+                    </h6>
                   </div>
                 ))
               )}

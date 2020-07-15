@@ -11,7 +11,6 @@ class App extends Component {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/home" component={Home} />
           <Route path="/games/:team/:year" component={PastGames} />
           <Route path="/games/:team" component={Team} />
         </Switch>
