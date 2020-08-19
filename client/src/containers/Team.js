@@ -18,10 +18,19 @@ class Team extends Component {
   componentDidMount() {
     this.setState({ isLoading: true });
 
+    const token = localStorage.getItem("token")
+      ? localStorage.getItem("token")
+      : sessionStorage.getItem("token");
+
     axios
       .get(
-        "https://api.collegefootballdata.com/games?year=2020&seasonType=regular&team=" +
-          this.state.teamURL
+        "http://localhost:1337/games?year.year=2020&team.school=" +
+          this.state.teamURL,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       )
       .then((result) =>
         this.setState({

@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "games",
+  "info": {
+    "name": "Games"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "home_team": {
+      "type": "string"
+    },
+    "away_team": {
+      "type": "string"
+    },
+    "home_points": {
+      "type": "integer"
+    },
+    "away_points": {
+      "type": "integer"
+    },
+    "venue": {
+      "type": "string"
+    },
+    "attendance": {
+      "type": "integer"
+    },
+    "start_date": {
+      "type": "string"
+    },
+    "year": {
+      "model": "years",
+      "via": "games"
+    },
+    "team": {
+      "via": "games",
+      "collection": "teams"
+    }
+  }
+}

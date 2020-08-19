@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "years",
+  "info": {
+    "name": "years"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "year": {
+      "type": "string"
+    },
+    "games": {
+      "via": "year",
+      "collection": "games"
+    }
+  }
+}

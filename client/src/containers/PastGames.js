@@ -19,12 +19,21 @@ class PastGames extends Component {
   componentDidMount() {
     this.setState({ isLoading: true });
 
+    const token = localStorage.getItem("token")
+      ? localStorage.getItem("token")
+      : sessionStorage.getItem("token");
+
     axios
       .get(
-        "https://api.collegefootballdata.com/games?year=" +
+        "http://localhost:1337/games?year.year=" +
           this.state.year +
-          "&seasonType=regular&team=" +
-          this.state.teamURL
+          "&team.school=" +
+          this.state.teamURL,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       )
       .then((result) =>
         this.setState({

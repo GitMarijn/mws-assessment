@@ -4,13 +4,16 @@ import "../src/App.css";
 import Home from "./containers/Home";
 import Team from "./containers/Team";
 import PastGames from "./containers/PastGames";
+import Login from "./containers/Login";
+import PrivateRoute from "./containers/PrivateRoute";
 
 class App extends Component {
   render() {
     const App = () => (
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route path="/auth/login" component={Login} />
+          <PrivateRoute exact path="/" component={Home} />
           <Route path="/games/:team/:year" component={PastGames} />
           <Route path="/games/:team" component={Team} />
         </Switch>

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "../styles/style_Home.css";
 import defaultLogo from "../images/default.png";
 
-class AltHome extends Component {
+class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,8 +21,16 @@ class AltHome extends Component {
   componentDidMount() {
     this.setState({ isLoading: true });
 
+    const token = localStorage.getItem("token")
+      ? localStorage.getItem("token")
+      : sessionStorage.getItem("token");
+
     axios
-      .get("https://api.collegefootballdata.com/teams")
+      .get("http://localhost:1337/teams", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((result) =>
         this.setState({
           isLoading: false,
@@ -54,6 +62,16 @@ class AltHome extends Component {
           (team.mascot && team.mascot.toLowerCase().includes(search))
       ),
     });
+  };
+
+  logOut = () => {
+    if (localStorage) {
+      localStorage.clear();
+    }
+
+    if (sessionStorage) {
+      sessionStorage.clear();
+    }
   };
 
   render() {
@@ -96,6 +114,17 @@ class AltHome extends Component {
 
     return (
       <React.Fragment>
+        <button
+          type="button"
+          className="btn btn-secondary btn-sm"
+          onClick={() => {
+            this.logOut();
+            this.props.history.push("/auth/login");
+          }}
+        >
+          Log out
+        </button>
+
         <div className="input-group input-group-lg col-sm-12">
           <div className="input-group-prepend">
             <span className="input-group-text">
@@ -172,4 +201,4 @@ class AltHome extends Component {
   }
 }
 
-export default AltHome;
+export default Home;

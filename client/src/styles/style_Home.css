@@ -49,3 +49,7 @@ ul#page-numbers li {
   text-decoration: underline;
   border-radius: 8px;
 }
+
+.btn {
+  margin: auto;
+}
